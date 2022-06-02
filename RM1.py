@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 import reprlib
 import dimod
 import neal
+
+from dwave.system import LeapHybridSampler
 from dwave.system.composites import EmbeddingComposite
+from dimod.binary_quadratic_model import BinaryQuadraticModel
+from dimod import Binary
 
 np.random.seed(0)
 repr_compact = reprlib.Repr()
@@ -11,7 +15,7 @@ repr_compact.maxother=200
 
 from scipy import stats
 from sklearn.linear_model import LinearRegression
-from pyqubo import Binary
+
 
 
 a0=[-0.3, -0.5, -1.0, -2.0, -3.0, -3.3, -3.5]  # elasticities in linear demand model
@@ -173,7 +177,7 @@ for i in range(t):
 print('Objective with additional equality constraints:')
 print(repr_compact.repr(objective))
 
-model = (-objective).compile().to_bqm()
+model = (objective).compile().to_bqm()
 
 print(repr_compact.repr(model))
 
